@@ -25,9 +25,6 @@ public class MainClass {
             numbers.removeRandom();
             
             numbers.printAll();
-            
-            
-            
     }
         
 }

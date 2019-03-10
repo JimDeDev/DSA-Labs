@@ -7,6 +7,7 @@ import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.Timer;
@@ -15,10 +16,9 @@ public class BallPanel extends JPanel implements ActionListener
 {
     private DrawPane drawPane;
     private JPanel bottomMenu;
-    private JButton addBallButton, add100BallButton, removeBallButton;
+    private JButton addBallBtn, add100BallBtn, removeBallBtn, removeAllBallsBtn, centreBallsBtn, groupBtn;
     private ArrayList<Ball> balls;
 
-    
     public BallPanel(ArrayList<Ball> balls)
     {  
         super(new BorderLayout());
@@ -32,21 +32,32 @@ public class BallPanel extends JPanel implements ActionListener
         this.add(drawPane, BorderLayout.CENTER);
       
         this.bottomMenu = new JPanel(); {
-            bottomMenu.setPreferredSize(new Dimension(600, 30));
+            bottomMenu.setPreferredSize(new Dimension(this.getWidth(), 40));
             bottomMenu.setBackground(Color.lightGray);
 
-            addBallButton = new JButton("Add Ball");
-            addBallButton.addActionListener(this);
-            bottomMenu.add(addBallButton);
+            addBallBtn = new JButton("Add");
+            addBallBtn.addActionListener(this);
+            bottomMenu.add(addBallBtn);
             
-            add100BallButton = new JButton("Add 100 Balls");
-            add100BallButton.addActionListener(this);
-            bottomMenu.add(add100BallButton);
+            add100BallBtn = new JButton("Add 100");
+            add100BallBtn.addActionListener(this);
+            bottomMenu.add(add100BallBtn);
 
-            removeBallButton = new JButton("Remove Ball");
-            removeBallButton.addActionListener(this);
-            bottomMenu.add(removeBallButton);
-            
+            removeBallBtn = new JButton("Remove");
+            removeBallBtn.addActionListener(this);
+            bottomMenu.add(removeBallBtn);
+
+            removeAllBallsBtn = new JButton("Remove All");
+            removeAllBallsBtn.addActionListener(this);
+            bottomMenu.add(removeAllBallsBtn);
+
+            centreBallsBtn = new JButton("Centre");
+            centreBallsBtn.addActionListener(this);
+            bottomMenu.add(centreBallsBtn);
+
+            groupBtn = new JButton("Group");
+            groupBtn.addActionListener(this);
+            bottomMenu.add(groupBtn);
         }
       this.add(bottomMenu, BorderLayout.SOUTH);
 
@@ -58,20 +69,39 @@ public class BallPanel extends JPanel implements ActionListener
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
         
-        if (source == addBallButton) {
+        if (source == addBallBtn) {
             newBall();
             System.out.println("Number of Balls: " + balls.size());
             
-        } else if (source == add100BallButton) {
+        } else if (source == add100BallBtn) {
             for(int i = 0; i < 100; i++) {
                 newBall();
             }
             System.out.println("Number of Balls: " + balls.size());
 
-        } else if (source == removeBallButton) {
-            balls.remove(balls.size() - 1);
+        } else if (source == removeBallBtn) {
+            if (!balls.isEmpty()) {
+                balls.get(balls.size() - 1).kill();
+                balls.remove(balls.size() - 1);
+            }
             System.out.println("Number of Balls: " + balls.size());
 
+        } else if (source == removeAllBallsBtn) {
+            for (Ball aBall : balls) aBall.kill();
+            balls.removeAll(balls);
+
+            System.out.println("Number of Balls: " + balls.size());
+
+        } else if (source == centreBallsBtn) {
+            for (Ball aBall : balls) aBall.centre();
+            System.out.println("Balls Centred");
+
+        } else if (source == groupBtn) {
+            Random rand = new Random();
+            int x = rand.nextInt(this.getWidth());
+            int y = rand.nextInt(this.getHeight());
+
+            for (Ball aBall : balls) aBall.position(x, y);
         }
         drawPane.repaint();
     }
