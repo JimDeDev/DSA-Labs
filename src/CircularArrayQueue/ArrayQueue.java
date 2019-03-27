@@ -1,63 +1,70 @@
 package CircularArrayQueue;
 
+import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class ArrayQueue<E> implements QueueADT<E> {
 
-    private final int INITIAL_CAPACITY = 5;
+    private final int INITIAL_SIZE = 20;
     private E[] queue;
     private int numElements;
-    private int qFront, qEnd;
+    private int first, last;
 
     public ArrayQueue(){
-        this.queue = (E[]) new Object[INITIAL_CAPACITY];
-        this.numElements = 0;
-        this.qEnd = 0;
-        this.qFront = 0;
+        this.queue = (E[]) (new Object[INITIAL_SIZE]);
+        first = -1;
+        last = -1;
     }
 
     @Override
     public void enqueue(E element) {
-
-        if(isEmpty()) {
+        if (isEmpty()) {
             queue[0] = element;
-            numElements++;
+            first = 0;
+            last = 0;
         } else {
-            if(numElements == queue.length) {
-                expand();
+            if(numElements + 1 == queue.length) {
+                this.grow();
             }
-            if(qEnd == queue.length - 1) {
-                qEnd = -1;
-            }
-            queue[++qEnd] = element;
-            numElements++;
+            if(last + 1 == queue.length) last = 0;
+            queue[++last] = element;
         }
+        numElements++;
     }
 
-    private void expand() {
-        E[] newQueue = (E[]) new Object[queue.length * 2];
-
-        int it = qFront;
-
-        for(int i = 0; i < numElements; i++)
-
-
+    private void grow() {
+        E[] newArray = (E[]) (new Object[size() * 2]);
+        Iterator<E> it = this.iterator();
+        int i = 0;
+        while (it.hasNext()) {
+            newArray[i++] = it.next();
+        }
+        first = 0;
+        last = size() -1;
+        this.queue = newArray;
     }
 
     @Override
     public E dequeue() throws NoSuchElementException {
-        if(isEmpty()) throw new NoSuchElementException();
-        E element = queue[qFront];
-        queue[qFront] = null;
-        qFront++;
+        if (isEmpty()) throw new NoSuchElementException();
+
+        //copying the data and setting the original to null
+        E returnElement = queue[first];
+        queue[first] = null;
+
+        if(first == queue.length - 1) {
+            first = 0;
+        } else {
+            first++;
+        }
         numElements--;
-        return element;
+        return returnElement;
     }
 
     @Override
     public E first() throws NoSuchElementException {
         if(isEmpty()) throw new NoSuchElementException();
-        return queue[qFront];
+        return queue[first];
     }
 
     @Override
@@ -70,12 +77,34 @@ public class ArrayQueue<E> implements QueueADT<E> {
         return numElements;
     }
 
+    public Iterator<E> iterator() {
+        return new Iterator<E>() {
+            private int i = first;
+
+            @Override
+            public boolean hasNext() {
+                if (i == queue.length) return (queue[0] != null);
+
+                if (queue[i] == null) {
+                    return false;
+                }
+                return true;
+            }
+
+            @Override
+            public E next() {
+                if(i == queue.length) i = 0;
+                return queue[i++];
+            }
+        };
+    }
+
     public String toString() {
         String output = "";
-        for(int i = 0; i < queue.length; i++) {
 
-            output += queue[i] + ", ";
-
+        for (Iterator it = iterator(); it.hasNext();) {
+            output += (it.next());
+            if(it.hasNext()) output += ", ";
         }
         return output;
     }
