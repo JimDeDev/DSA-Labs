@@ -23,11 +23,12 @@ public class ArrayQueue<E> implements QueueADT<E> {
             first = 0;
             last = 0;
         } else {
-            if(numElements + 1 == queue.length) {
+            if(numElements == queue.length) {
                 this.grow();
             }
-            if(last + 1 == queue.length) last = 0;
-            queue[++last] = element;
+            last++;
+            if(last == queue.length) last = 0;
+            queue[last] = element;
         }
         numElements++;
     }
@@ -52,10 +53,9 @@ public class ArrayQueue<E> implements QueueADT<E> {
         E returnElement = queue[first];
         queue[first] = null;
 
-        if(first == queue.length - 1) {
+        first++;
+        if(first == queue.length) {
             first = 0;
-        } else {
-            first++;
         }
         numElements--;
         return returnElement;
@@ -80,20 +80,17 @@ public class ArrayQueue<E> implements QueueADT<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
             private int i = first;
+            private int elementsPassed = 0;
 
             @Override
             public boolean hasNext() {
-                if (i == queue.length) return (queue[0] != null);
-
-                if (queue[i] == null) {
-                    return false;
-                }
-                return true;
+                return (elementsPassed < numElements);
             }
 
             @Override
             public E next() {
                 if(i == queue.length) i = 0;
+                elementsPassed++;
                 return queue[i++];
             }
         };

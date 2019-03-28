@@ -18,7 +18,7 @@ public class Main {
          System.out.println("Current Queue: " + queue.toString());
 
          System.out.println("Dequeue: " + queue.dequeue());
-         System.out.println(queue.toString());
+         System.out.println("Current Queue: " + queue.toString());
 
          queue.enqueue("Sal");
          queue.enqueue("Jef");
