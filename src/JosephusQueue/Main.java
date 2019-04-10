@@ -3,8 +3,6 @@ package JosephusQueue;
 
 import CircularArrayQueue.ArrayQueue;
 
-import java.util.LinkedList;
-
 /**
  *
  * @author gjr5542
