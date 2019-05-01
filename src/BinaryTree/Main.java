@@ -11,17 +11,19 @@ public class Main {
 
      public static void main(String[] args) {
 
-          MutableTreeNode root = new LinkedBinaryTreeNode<String>("A");
-          MutableTreeNode nodeB = new LinkedBinaryTreeNode<String>("B");
-          MutableTreeNode nodeC = new LinkedBinaryTreeNode<String>("C");
-          MutableTreeNode nodeD = new LinkedBinaryTreeNode<String>("D");
-          MutableTreeNode nodeE = new LinkedBinaryTreeNode<String>("E");
-          MutableTreeNode nodeF = new LinkedBinaryTreeNode<String>("F");
+          LinkedBinaryTreeNode<String> root = new LinkedBinaryTreeNode<>("A");
+          LinkedBinaryTreeNode<String> nodeB = new LinkedBinaryTreeNode<>("B");
+          LinkedBinaryTreeNode<String> nodeC = new LinkedBinaryTreeNode<>("C");
+          LinkedBinaryTreeNode<String> nodeD = new LinkedBinaryTreeNode<>("D");
+          LinkedBinaryTreeNode<String> nodeE = new LinkedBinaryTreeNode<>("E");
+          LinkedBinaryTreeNode<String> nodeF = new LinkedBinaryTreeNode<>("F");
 
           root.insert(nodeB, 0);
           root.insert(nodeC, 1);
-
+          nodeB.insert(nodeD, 0);
+          nodeB.insert(nodeE, 1);
           System.out.println(root);
+          System.out.println(nodeB);
 
 
      }

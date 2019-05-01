@@ -8,7 +8,7 @@ import java.util.NoSuchElementException;
 public class LinkedBinaryTreeNode<E> implements MutableTreeNode {
 
     private E element;
-    private MutableTreeNode parent, leftChild, rightChild;
+    private LinkedBinaryTreeNode parent, leftChild, rightChild;
 
     public LinkedBinaryTreeNode(E element) {
         this.element = element;
@@ -51,12 +51,12 @@ public class LinkedBinaryTreeNode<E> implements MutableTreeNode {
             if (this.leftChild != null) {
                 this.leftChild.removeFromParent();
             }
-            this.leftChild = child;
+            this.leftChild = (LinkedBinaryTreeNode) child;
         } else {
             if (this.rightChild != null) {
                 this.rightChild.removeFromParent();
             }
-            this.rightChild = child;
+            this.rightChild = (LinkedBinaryTreeNode) child;
         }
         child.setParent(this);
     }
@@ -99,9 +99,13 @@ public class LinkedBinaryTreeNode<E> implements MutableTreeNode {
         this.element = (E) object;
     }
 
+    public E getUserObject() {
+        return this.element;
+    }
+
     @Override
     public void setParent(MutableTreeNode newParent) {
-        this.parent = newParent;
+        this.parent = (LinkedBinaryTreeNode) newParent;
     }
 
     @Override
@@ -132,9 +136,11 @@ public class LinkedBinaryTreeNode<E> implements MutableTreeNode {
 
     public String toString() {
         String output = "";
-
+        if (this.parent != null) output += "Parent: " + this.parent.getUserObject() + "\n";
         output += "Element: " + this.element + "\n";
-        output += "left Child: " + this.leftChild.toString();
+        output += "left Child: " + this.leftChild.getUserObject() + "\n";
+        output += "Right Child: " + this.rightChild.getUserObject() + "\n";
+
         return output;
     }
 }
