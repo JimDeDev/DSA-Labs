@@ -1,8 +1,6 @@
 
 package BinaryTree;
 
-import javax.swing.tree.MutableTreeNode;
-
 /**
  *
  * @author gjr5542
