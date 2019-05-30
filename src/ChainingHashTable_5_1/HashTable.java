@@ -68,7 +68,7 @@ public class HashTable<E> {
     }
 
     private void expand() {
-        System.out.println("WE WILL EXPAND");
+        System.out.println("----- Table is Expanding ------");
 
         Node<E>[] temp = table;
         numElements = 0;

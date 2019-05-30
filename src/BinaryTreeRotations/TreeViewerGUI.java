@@ -1,7 +1,5 @@
 package BinaryTreeRotations;
 
-import javafx.scene.transform.Rotate;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;

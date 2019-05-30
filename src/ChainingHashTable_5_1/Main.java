@@ -27,18 +27,16 @@ public class Main {
         System.out.println("Jaime in table? " + hashTable.contains(jaime));
         System.out.println("Meg in table? " + hashTable.contains(meg));
 
-        System.out.println("Remove: " + matt + " " + hashTable.remove(matt));
-        System.out.println("Remove: " + meg + " " + hashTable.remove(meg));
-        System.out.println("Remove: " + reuben + " " + hashTable.remove(reuben));
+        System.out.println();
+
+        System.out.println("Remove: " + matt + " Success? " + hashTable.remove(matt));
+        System.out.println("Remove: " + meg + " Success? " + hashTable.remove(meg));
+        System.out.println("Remove: " + reuben + " Success? " + hashTable.remove(reuben));
+
+        System.out.println();
 
         System.out.println("Matt in table? " + hashTable.contains(matt));
 
         System.out.println(hashTable);
-
-
-
-
-
     }
-
 }
